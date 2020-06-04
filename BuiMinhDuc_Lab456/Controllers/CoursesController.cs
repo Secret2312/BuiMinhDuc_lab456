@@ -16,6 +16,7 @@ namespace BuiMinhDuc_Lab456.Controllers
         {
             _dbContext = new ApplicationDbContext();
         }
+        // GET: Courses
         [Authorize]
         public ActionResult Create()
         {
@@ -25,9 +26,10 @@ namespace BuiMinhDuc_Lab456.Controllers
             };
             return View(viewModel);
         }
-        // GET: Courses
+        
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(CourseViewModel viewModel)
         {
             if (!ModelState.IsValid)
