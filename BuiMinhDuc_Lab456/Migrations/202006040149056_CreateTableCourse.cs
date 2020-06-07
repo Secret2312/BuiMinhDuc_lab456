@@ -10,30 +10,30 @@ namespace BuiMinhDuc_Lab456.Migrations
             CreateTable(
                 "dbo.Categories",
                 c => new
-                    {
-                        Id = c.Byte(nullable: false),
-                        Name = c.String(nullable: false, maxLength: 255),
-                    })
+                {
+                    Id = c.Byte(nullable: false),
+                    Name = c.String(nullable: false, maxLength: 255),
+                })
                 .PrimaryKey(t => t.Id);
-            
+
             CreateTable(
                 "dbo.Courses",
                 c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Place = c.String(nullable: false, maxLength: 255),
-                        DateTime = c.DateTime(nullable: false),
-                        CategoryID = c.Byte(nullable: false),
-                        Lecturer_Id = c.String(maxLength: 128),
-                    })
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    Place = c.String(nullable: false, maxLength: 255),
+                    DateTime = c.DateTime(nullable: false),
+                    CategoryID = c.Byte(nullable: false),
+                    Lecturer_Id = c.String(maxLength: 128),
+                })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Categories", t => t.CategoryID, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.Lecturer_Id)
                 .Index(t => t.CategoryID)
                 .Index(t => t.Lecturer_Id);
-            
+
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.Courses", "Lecturer_Id", "dbo.AspNetUsers");

@@ -10,7 +10,7 @@ namespace BuiMinhDuc_Lab456.Migrations
             Sql("INSERT INTO CATEGORIES (ID, NAME) VALUES (1,'Development')");
             Sql("INSERT INTO CATEGORIES (ID, NAME) VALUES (2,'Business')");
             Sql("INSERT INTO CATEGORIES (ID, NAME) VALUES (3,'Marketing')");
-
+            Sql("INSERT INTO CATEGORIES (ID, NAME) VALUES (4,'Make Money')");
         }
         
         public override void Down()

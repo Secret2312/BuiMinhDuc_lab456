@@ -9,7 +9,9 @@ namespace BuiMinhDuc_Lab456.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+            MigrationsDirectory = @"Migrations\ApplicationDbMigrations";
         }
 
         protected override void Seed(BuiMinhDuc_Lab456.Models.ApplicationDbContext context)
