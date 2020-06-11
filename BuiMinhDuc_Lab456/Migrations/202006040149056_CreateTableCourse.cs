@@ -24,21 +24,21 @@ namespace BuiMinhDuc_Lab456.Migrations
                     Place = c.String(nullable: false, maxLength: 255),
                     DateTime = c.DateTime(nullable: false),
                     CategoryID = c.Byte(nullable: false),
-                    Lecturer_Id = c.String(maxLength: 128),
+                    LecturerId = c.String(maxLength: 128),
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Categories", t => t.CategoryID, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.Lecturer_Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.LecturerId)
                 .Index(t => t.CategoryID)
-                .Index(t => t.Lecturer_Id);
+                .Index(t => t.LecturerId);
 
         }
 
         public override void Down()
         {
-            DropForeignKey("dbo.Courses", "Lecturer_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Courses", "LecturerId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Courses", "CategoryID", "dbo.Categories");
-            DropIndex("dbo.Courses", new[] { "Lecturer_Id" });
+            DropIndex("dbo.Courses", new[] { "LecturerId" });
             DropIndex("dbo.Courses", new[] { "CategoryID" });
             DropTable("dbo.Courses");
             DropTable("dbo.Categories");

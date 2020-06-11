@@ -18,7 +18,7 @@ namespace BuiMinhDuc_Lab456.Controllers
 
         public ActionResult Index()
         {
-            var upcommingCourses = _dbContext.Courses.Include(x => x.Lecturer).Include(c => c.Category).Where(c => c.DateTime > DateTime.Now);
+            var upcommingCourses = _dbContext.Courses.Include(x => x.Lecturer).Include(c => c.Category).Where(c => c.DateTime > DateTime.Now).ToList();
             return View(upcommingCourses);
         }
 
