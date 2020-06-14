@@ -44,5 +44,21 @@ textarea {
 .course >li .details{
     position: absolute;
     top:0;
-    left:70px
+    left:70px;
+    display: inline-grid;
+
 }
+.course > li .details >span >button{
+    padding: 0px 10px;
+}
+
+.btn-remove {
+    color: #5bc0de;
+    background-color: #ffffff;
+    border-color: #46b8da;
+}
+.action {
+    margin-left: 70px;
+    
+}
+

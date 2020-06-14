@@ -1,4 +1,5 @@
-﻿using BuiMinhDuc_Lab456.Models;
+﻿using BuiMinhDuc_Lab456.DTOs;
+using BuiMinhDuc_Lab456.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,31 @@ using System.Web.Http;
 namespace BuiMinhDuc_Lab456.Controllers
 {
     [Authorize]
-    public class AttendacesController : ApiController
+    public class AttendancesController : ApiController
     {
         private ApplicationDbContext _dbContext;
-        public AttendacesController()
+
+        public AttendancesController()
         {
             _dbContext = new ApplicationDbContext();
         }
         [HttpPost]
-        public IHttpActionResult Attend([FromBody] int courseId)
+        public IHttpActionResult Attend(AttendanceDto attendanceDto)
         {
+            var userId = User.Identity.GetUserId();
+            if(_dbContext.Attendances.Any(a=>a.AttendeeId == userId && a.CourseId == attendanceDto.CourseId))
+            {
+                return BadRequest("The Attendance already exists!");
+            }
             var attendance = new Attendance
             {
-                CourseId = courseId,
-                AttendeeId = User.Identity.GetUserId()
+                CourseId = attendanceDto.CourseId,
+                AttendeeId = userId
             };
             _dbContext.Attendances.Add(attendance);
             _dbContext.SaveChanges();
             return Ok();
         }
+        
     }
 }

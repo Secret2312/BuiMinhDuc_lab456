@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using BuiMinhDuc_Lab456.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace BuiMinhDuc_Lab456.Controllers
 {
@@ -18,8 +20,23 @@ namespace BuiMinhDuc_Lab456.Controllers
 
         public ActionResult Index()
         {
+            var userId = User.Identity.GetUserId();
             var upcommingCourses = _dbContext.Courses.Include(x => x.Lecturer).Include(c => c.Category).Where(c => c.DateTime > DateTime.Now).ToList();
-            return View(upcommingCourses);
+
+            var upcommingAttendance = _dbContext.Attendances
+                .Where(a => a.AttendeeId == userId).ToList();
+
+            var upcommingFollowing = _dbContext.Followings
+               .Where(a => a.FollowerId == userId).ToList();
+
+            var viewModel = new CoursesViewModel
+            {
+                UpcommingCourses = upcommingCourses,
+                ShowAction = User.Identity.IsAuthenticated,
+                UpcommingAttendances = upcommingAttendance,
+                UpcommingFollowings = upcommingFollowing
+            };
+            return View(viewModel);
         }
 
         public ActionResult About()

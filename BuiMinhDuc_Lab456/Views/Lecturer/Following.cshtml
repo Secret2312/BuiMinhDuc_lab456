@@ -1,0 +1,65 @@
+﻿
+@model BuiMinhDuc_Lab456.ViewModels.FollowingViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Lecturer Following";
+}
+<h2>Lecturer Following</h2>
+<ol class="course" style="list-style:decimal">
+    @foreach (var lecturer in Model.UpcommingFollowing)
+    {
+        <li>
+            <span class="lecturer">
+                @lecturer.Name
+                @if (Model.ShowAction)
+                {
+                    <button flag="true" data-user-id="@lecturer.Id" class="unfl btn btn-info btn-sm js-toggle-follow">Following</button>
+                }
+            </span>
+        </li>
+    }
+</ol>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {            
+            $(".js-toggle-follow").click(function (e) {
+                var button = $(e.target)
+                if (button.attr('flag') == "true") {
+                    $.ajax({
+                        url: "/Lecturer/Unfollow",
+                        type: "POST",
+                        data: { FolloweeId: button.attr('data-user-id') },
+                        success: function () {
+                            button.removeClass('btn-info').addClass('btn-default').text('Follow').removeClass('unfl');
+                            button.attr('flag', 'false')
+                            location.reload(true);
+                        },
+                        error: function (xhr) {
+                            alert(xhr.responseText);
+                        }
+                    })
+                }
+            });            
+
+            $('.unfl').hover(function (e) {
+                var button = $(e.target);
+                if (button.attr('flag') == "true") {
+                    button.removeClass("btn-info").addClass("btn-remove").text("Unfollow");
+                }
+            },
+                function (e) {
+                    $(e.target).removeClass("btn-remove").addClass("btn-info").text("Following");
+                });
+
+            $('.unsub').hover(function (e) {
+                $(e.target).removeClass("btn-info").addClass("btn-remove").text("Unjoin");
+            },
+                function (e) {
+                    $(e.target).removeClass("btn-remove").addClass("btn-info").text("Going");
+                });
+        });
+    </script>
+}
+
