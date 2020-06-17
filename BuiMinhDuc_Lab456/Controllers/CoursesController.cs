@@ -84,6 +84,8 @@ namespace BuiMinhDuc_Lab456.Controllers
             course.Place = viewModel.Place;
             course.DateTime = viewModel.GetDateTime();
             course.CategoryID = viewModel.Category;
+            UpdateModel(course);
+            _dbContext.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
         [Authorize]
@@ -119,7 +121,7 @@ namespace BuiMinhDuc_Lab456.Controllers
             var courses = _dbContext.Courses
                 .Where(a => a.LecturerId == userId && a.DateTime > DateTime.Now)
                 .Include(l=>l.Lecturer)
-                .Include(l=>l.Category).ToList();
+                .Include(l=>l.Category).Where(a=>a.IsCanceled == false).ToList();
             
             var viewModel = new CoursesViewModel
             {

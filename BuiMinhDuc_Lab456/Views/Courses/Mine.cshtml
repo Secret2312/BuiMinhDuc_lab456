@@ -26,7 +26,7 @@
                     @course.Lecturer.Name
                 </span>
                 <span class="category">
-                    @course.Category.Name
+                    @course.Category.Name                  
                 </span>
 
             </div>
@@ -55,6 +55,7 @@
                                 link.parents("li").fadeOut(function () {
                                     $(this).remove();
                                 });
+                                aler("Huỷ bỏ khoá học thành công");
                             })
                             .fail(function (xhr) {
                                 alert(xhr.responseText);

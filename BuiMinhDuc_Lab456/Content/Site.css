@@ -22,7 +22,23 @@ select,
 textarea {
     max-width: 280px;
 }
+/*NavBar*/
+a.navbar-brand {
+    color: #fff701 !important;
+    font-size: x-large !important;
+}
 
+.navbar-inverse .navbar-nav > li > a {
+    color: #cbbde2 !important;
+}
+
+.navbar-inverse {
+    background-color: #3e3c40 !important;
+}
+
+/*.fa-user {
+    padding-right: 5px;
+}*/
 /*Course Style*/
 .course{
     list-style:none;
@@ -59,6 +75,30 @@ textarea {
 }
 .action {
     margin-left: 70px;
-    
 }
 
+.fa-user {
+    padding-right: 5px;
+}
+.form-inline {
+    vertical-align: middle;
+    position: absolute;
+    display: inline-flex;
+    margin-top: 7px;
+    right: 30%;
+}
+.form-inline > input{
+    margin-right:5px;
+}
+.btn-outline-info {
+    color: #17a2b8;
+    background-color: transparent;
+    background-image: none;
+    border-color: #17a2b8;
+}
+.btn-outline-info:hover {
+    color: #3e3c40;
+    background-color: #17a2b8;
+    background-image: none;
+    border-color: #17a2b8;
+}
