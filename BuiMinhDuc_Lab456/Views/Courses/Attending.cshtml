@@ -1,16 +1,17 @@
 ﻿@using Microsoft.AspNet.Identity
 @model BuiMinhDuc_Lab456.ViewModels.CoursesViewModel
-
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Attending";
 }
 @{
     var userId = User.Identity.GetUserId();
 }
+<h2>Attending</h2>
+
 <ul class="course">
     @foreach (var course in Model.UpcommingCourses)
     {
-        if (!course.IsCanceled)
+        if (course.IsCanceled == false)
         {
             <li>
                 <div class="date">
@@ -76,21 +77,21 @@
 </ul>
 @section scripts
 {
-    <script>      
+    <script>
         $(document).ready(function () {
             $(".js-toggle-attendance").click(function (e) {
                 var button = $(e.target);
                 if (button.attr('flag') == "false")
-                $.post("/api/attendances", { courseId: button.attr("data-course-id") })
-                    .done(function () {
-                        button.removeClass("btn-default").addClass("btn-info").text("Going").addClass("unsub");
-                        button.attr('flag', 'true');
-                        location.reload(true);                        
-                    })
-                    .fail(function () {
-                        alert("Something failed!");
-                    });
-            }); 
+                    $.post("/api/attendances", { courseId: button.attr("data-course-id") })
+                        .done(function () {
+                            button.removeClass("btn-default").addClass("btn-info").text("Going").addClass("unsub");
+                            button.attr('flag', 'true');
+                            location.reload(true);
+                        })
+                        .fail(function () {
+                            alert("Something failed!");
+                        });
+            });
 
             $(".js-toggle-attendance").click(function (e) {
                 var button = $(e.target)
@@ -129,7 +130,7 @@
                 }
             });
 
-            $(".js-toggle-following").click(function (e) {                
+            $(".js-toggle-following").click(function (e) {
                 var button = $(e.target);
                 if (button.attr('flag') == "false") {
                     $.post("/api/followings", { followeeId: button.attr("data-user-id") })
@@ -142,27 +143,25 @@
                             alert(xhr.responseText);
                         })
                 }
-                
-            });   
-                                 
+
+            });
+
             $('.unfl').hover(function (e) {
                 var button = $(e.target);
                 if (button.attr('flag') == "true") {
                     button.removeClass("btn-info").addClass("btn-remove").text("Unfollow");
-                }                
+                }
             },
-            function (e) {
-                $(e.target).removeClass("btn-remove").addClass("btn-info").text("Following");
-            });
+                function (e) {
+                    $(e.target).removeClass("btn-remove").addClass("btn-info").text("Following");
+                });
 
             $('.unsub').hover(function (e) {
                 $(e.target).removeClass("btn-info").addClass("btn-remove").text("Unjoin");
             },
                 function (e) {
                     $(e.target).removeClass("btn-remove").addClass("btn-info").text("Going");
-            });   
-            
-
+                });
         });
     </script>
 }

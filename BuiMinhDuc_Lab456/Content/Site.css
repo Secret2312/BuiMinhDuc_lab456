@@ -22,3 +22,83 @@ select,
 textarea {
     max-width: 280px;
 }
+/*NavBar*/
+a.navbar-brand {
+    color: #fff701 !important;
+    font-size: x-large !important;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #cbbde2 !important;
+}
+
+.navbar-inverse {
+    background-color: #3e3c40 !important;
+}
+
+/*.fa-user {
+    padding-right: 5px;
+}*/
+/*Course Style*/
+.course{
+    list-style:none;
+    margin-top:10px;
+}
+
+.course >li{
+    position:relative;
+    margin-bottom:30px;
+}
+.course > li .date{
+    text-align:center;
+    background-color: #d41d50;
+    color: white;
+    width: 60px;
+    border-radius: 8px;
+}
+
+.course >li .details{
+    position: absolute;
+    top:0;
+    left:70px;
+    display: inline-grid;
+
+}
+.course > li .details >span >button{
+    padding: 0px 10px;
+}
+
+.btn-remove {
+    color: #5bc0de;
+    background-color: #ffffff;
+    border-color: #46b8da;
+}
+.action {
+    margin-left: 70px;
+}
+
+.fa-user {
+    padding-right: 5px;
+}
+.form-inline {
+    vertical-align: middle;
+    position: absolute;
+    display: inline-flex;
+    margin-top: 7px;
+    right: 30%;
+}
+.form-inline > input{
+    margin-right:5px;
+}
+.btn-outline-info {
+    color: #17a2b8;
+    background-color: transparent;
+    background-image: none;
+    border-color: #17a2b8;
+}
+.btn-outline-info:hover {
+    color: #3e3c40;
+    background-color: #17a2b8;
+    background-image: none;
+    border-color: #17a2b8;
+}
