@@ -76,8 +76,8 @@ namespace BuiMinhDuc_Lab456.Migrations
                 .Index(t => t.UserId);
 
         }
-        
-        public override void Down()
+
+    public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");

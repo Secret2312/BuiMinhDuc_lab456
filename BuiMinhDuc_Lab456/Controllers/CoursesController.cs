@@ -17,7 +17,7 @@ namespace BuiMinhDuc_Lab456.Controllers
             _dbContext = new ApplicationDbContext();
         }
         // GET: Courses
-        [Authorize]
+        
         public ActionResult Create()
         {
             var viewModel = new CourseViewModel
@@ -49,5 +49,6 @@ namespace BuiMinhDuc_Lab456.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        
     }
 }

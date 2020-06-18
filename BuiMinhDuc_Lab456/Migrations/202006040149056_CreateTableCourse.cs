@@ -24,13 +24,13 @@ namespace BuiMinhDuc_Lab456.Migrations
                     Place = c.String(nullable: false, maxLength: 255),
                     DateTime = c.DateTime(nullable: false),
                     CategoryID = c.Byte(nullable: false),
-                    Lecturer_Id = c.String(maxLength: 128),
+                    LecturerId = c.String(nullable: false, maxLength: 128),
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Categories", t => t.CategoryID, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.Lecturer_Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.LecturerId)
                 .Index(t => t.CategoryID)
-                .Index(t => t.Lecturer_Id);
+                .Index(t => t.LecturerId);
 
         }
 
