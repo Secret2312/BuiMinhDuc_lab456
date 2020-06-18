@@ -1,0 +1,167 @@
+﻿@using Microsoft.AspNet.Identity
+@model BuiMinhDuc_Lab456.ViewModels.CoursesViewModel
+@{
+    ViewBag.Title = "Attending";
+}
+@{
+    var userId = User.Identity.GetUserId();
+}
+<h2>Attending</h2>
+
+<ul class="course">
+    @foreach (var course in Model.UpcommingCourses)
+    {
+        if (course.IsCanceled == false)
+        {
+            <li>
+                <div class="date">
+                    <div class="month">
+                        @course.DateTime.ToString("MM")
+                    </div>
+                    <div class="dat">
+                        @course.DateTime.ToString("dd")
+                    </div>
+
+                </div>
+                <div class="details">
+                    <span class="lecturer">
+                        @course.Lecturer.Name
+                        @if (Model.ShowAction)
+                        {
+                            if (course.LecturerId == userId)
+                            {
+
+                            }
+                            else
+                            {
+                                if (Model.UpcommingFollowings.Any(f => f.FollowerId == userId && f.FolloweeId == course.LecturerId))
+                                {
+                                    <button flag="true" data-user-id="@course.LecturerId" class="unfl btn btn-info btn-sm js-toggle-following">Following</button>
+                                }
+                                else
+                                {
+                                    <button flag="false" data-user-id="@course.LecturerId" class="btn btn-default btn-sm js-toggle-following">Follow</button>
+
+                                }
+                            }
+                        }
+                    </span>
+                    <span class="category">
+                        @course.Category.Name
+                        @if (Model.ShowAction)
+                        {
+                            if (course.LecturerId == userId)
+                            {
+
+                            }
+                            else
+                            {
+                                if (Model.UpcommingAttendances.Any(f => f.AttendeeId == userId && f.CourseId == course.Id))
+                                {
+                                    <button flag="true" data-course-id="@course.Id" class="unsub btn btn-info btn-sm js-toggle-attendance">Going</button>
+                                }
+                                else
+                                {
+                                    <button flag="false" data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Join</button>
+
+                                }
+                            }
+                        }
+                    </span>
+
+                </div>
+            </li>
+        }
+
+    }
+</ul>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".js-toggle-attendance").click(function (e) {
+                var button = $(e.target);
+                if (button.attr('flag') == "false")
+                    $.post("/api/attendances", { courseId: button.attr("data-course-id") })
+                        .done(function () {
+                            button.removeClass("btn-default").addClass("btn-info").text("Going").addClass("unsub");
+                            button.attr('flag', 'true');
+                            location.reload(true);
+                        })
+                        .fail(function () {
+                            alert("Something failed!");
+                        });
+            });
+
+            $(".js-toggle-attendance").click(function (e) {
+                var button = $(e.target)
+                if (button.attr('flag') == "true") {
+                    $.ajax({
+                        url: "/Courses/Unjoin",
+                        type: "POST",
+                        data: { courseid: button.attr('data-course-id') },
+                        success: function () {
+                            button.removeClass('btn-info').addClass('btn-default').text('Join').removeClass('unsub');
+                            button.attr('flag', 'false')
+                            location.reload(true);
+                        },
+                        error: function (xhr) {
+                            alert(xhr.responseText);
+                        }
+                    })
+                }
+            });
+            $(".js-toggle-following").click(function (e) {
+                var button = $(e.target)
+                if (button.attr('flag') == "true") {
+                    $.ajax({
+                        url: "/Lecturer/Unfollow",
+                        type: "POST",
+                        data: { FolloweeId: button.attr('data-user-id') },
+                        success: function () {
+                            button.removeClass('btn-info').addClass('btn-default').text('Follow').removeClass('unfl');
+                            button.attr('flag', 'false')
+                            location.reload(true);
+                        },
+                        error: function (xhr) {
+                            alert(xhr.responseText);
+                        }
+                    })
+                }
+            });
+
+            $(".js-toggle-following").click(function (e) {
+                var button = $(e.target);
+                if (button.attr('flag') == "false") {
+                    $.post("/api/followings", { followeeId: button.attr("data-user-id") })
+                        .done(function () {
+                            button.removeClass("btn-default").addClass("btn-info").text("Following").addClass("unfl");
+                            button.attr('flag', 'true');
+                            location.reload(true);
+                        })
+                        .fail(function (xhr) {
+                            alert(xhr.responseText);
+                        })
+                }
+
+            });
+
+            $('.unfl').hover(function (e) {
+                var button = $(e.target);
+                if (button.attr('flag') == "true") {
+                    button.removeClass("btn-info").addClass("btn-remove").text("Unfollow");
+                }
+            },
+                function (e) {
+                    $(e.target).removeClass("btn-remove").addClass("btn-info").text("Following");
+                });
+
+            $('.unsub').hover(function (e) {
+                $(e.target).removeClass("btn-info").addClass("btn-remove").text("Unjoin");
+            },
+                function (e) {
+                    $(e.target).removeClass("btn-remove").addClass("btn-info").text("Going");
+                });
+        });
+    </script>
+}

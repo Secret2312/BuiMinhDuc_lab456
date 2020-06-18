@@ -21,12 +21,13 @@ namespace BuiMinhDuc_Lab456
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/bootbox.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/MyStyle.css",
+            bundles.Add(new StyleBundle("~/Content/css").Include(                      
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"
+                      "~/Content/site.css",
+                      "~/Content/MyStyle.css"                      
                      ));
         }
     }
